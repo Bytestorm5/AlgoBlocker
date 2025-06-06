@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "AlgoBlocker",
+  "version": "0.1.0",
+  "description": "Blocks algorithm-driven sections on YouTube and Reddit",
+  "icons": {
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["content_scripts/youtube.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.reddit.com/*"],
+      "js": ["content_scripts/reddit.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "algoblocker@example.com"
+    }
+  }
+}
