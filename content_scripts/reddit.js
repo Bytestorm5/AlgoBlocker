@@ -1,20 +1,24 @@
 (function() {
-  const selectors = [
-    '[data-testid="frontpage-sidebar"]',
-    '[data-testid="post-container"]',
-    '[data-testid="feed-sidebar"]',
-    '.promotedlink'
-  ];
+  const allowed = ['/', '/r/popular', '/r/all'];
+
+  function onTargetPage() {
+    const path = location.pathname.replace(/\/$/, '');
+    return allowed.includes(path);
+  }
 
   function hide() {
-    selectors.forEach(s => {
-      document.querySelectorAll(s).forEach(el => {
-        el.style.display = 'none';
-      });
+    if (!onTargetPage()) {
+      return;
+    }
+    document.querySelectorAll('shreddit-feed').forEach(el => {
+      el.remove();
     });
   }
 
   const observer = new MutationObserver(hide);
-  observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+  observer.observe(document.body || document.documentElement, {
+    childList: true,
+    subtree: true
+  });
   hide();
 })();
